@@ -5,6 +5,7 @@ namespace Lexik\Bundle\TranslationBundle\DependencyInjection;
 use Lexik\Bundle\TranslationBundle\Storage\StorageInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -32,7 +33,7 @@ class Configuration implements ConfigurationInterface
         $registrationTypes = array('all', 'files', 'database');
         $inputTypes = array('text', 'textarea');
 
-        $cannotBeEmptyMethodName = 'cannotBeEmpty'
+        $cannotBeEmptyMethodName = 'cannotBeEmpty';
         if (Kernel::VERSION_ID >= 30400) {
             $cannotBeEmptyMethodName = 'requiresAtLeastOneElement';
         }
