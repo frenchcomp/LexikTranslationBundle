@@ -32,6 +32,11 @@ class Configuration implements ConfigurationInterface
         $registrationTypes = array('all', 'files', 'database');
         $inputTypes = array('text', 'textarea');
 
+        $cannotBeEmptyMethodName = 'cannotBeEmpty'
+        if (Kernel::VERSION_ID >= 30400) {
+            $cannotBeEmptyMethodName = 'requiresAtLeastOneElement';
+        }
+
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
@@ -42,7 +47,7 @@ class Configuration implements ConfigurationInterface
 
                 ->arrayNode('fallback_locale')
                     ->isRequired()
-                    ->requiresAtLeastOneElement()
+                    ->{$cannotBeEmptyMethodName}()
                     ->prototype('scalar')->end()
                     ->beforeNormalization()
                         ->ifString()
@@ -52,7 +57,7 @@ class Configuration implements ConfigurationInterface
 
                 ->arrayNode('managed_locales')
                     ->isRequired()
-                    ->requiresAtLeastOneElement()
+                    ->{$cannotBeEmptyMethodName}()
                     ->prototype('scalar')->end()
                 ->end()
 
